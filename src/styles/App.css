@@ -1,0 +1,22 @@
+.taskInput {
+  width: 600px;
+  height: 50px;
+  padding: 10px;
+  color: #ccc;
+  font-size: 30px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.table {
+  margin: 0 auto;
+  width: 600px;
+  border-collapse: collapse;
+}
+.hidden {
+  display: none;
+}
+.controlRow td:hover{
+  transform: scale(1.2);
+  cursor: pointer;
+}
+

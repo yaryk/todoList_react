@@ -1,0 +1,39 @@
+.row {
+    height: 50px;
+}
+.row:hover {
+    background: #ccc;
+}
+.statusActive {
+    width: 20px;
+    background: url(../../imgs/active.png) 50% 50% no-repeat;
+}
+.content span {
+    display: block;
+    width: 100%;
+    font-size: 25px;
+    text-align: left;
+}
+.statusDone {
+    width: 20px;
+    background: url(../../imgs/done.png) 50% 50% no-repeat;
+}
+.closeBtn {
+    width: 70px;
+    background: url("../../imgs/closeBtn.png") 50% 50% no-repeat;
+    background-size: 24px 24px;
+}
+.closeBtn:hover {
+    transform: scale(1.1);
+}
+.hidden {
+    display: none;
+}
+.editInput {
+    display: none;
+    width: 90%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 25px;
+    font-size: 18px;
+}

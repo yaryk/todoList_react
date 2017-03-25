@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Row from './Row';
 import ControlRow from "./ControlRow";
-import './App.css';
+import '../styles/App.css';
 
 class App extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class App extends Component {
       status: true,
       content: this.refs.task.value,
       visible: true
-    }
+    };
     this.state.tasks["task-" + timestamp] = curTask;
     this.setState({
       tasks: this.state.tasks
@@ -89,7 +89,7 @@ class App extends Component {
   clearDone() {
     var self = this;
     Object.keys(this.state.tasks).forEach(function (item) {
-      if (self.state.tasks[item].status == false) {
+      if (self.state.tasks[item].status === false) {
         delete self.state.tasks[item];
         window.localStorage.setItem("tasks", JSON.stringify(self.state.tasks));
         self.setState({
@@ -103,7 +103,7 @@ class App extends Component {
     return (
       <div>
         <form ref="form" onSubmit={this.addTask.bind(this)}>
-          <input type="text" ref="task" />
+          <input type="text" ref="task" placeholder="Type your task" className="taskInput"/>
         </form>
         <table className="table">
           <tbody>

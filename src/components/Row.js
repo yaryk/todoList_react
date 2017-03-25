@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import "./Row.css";
+import '../styles/Row.css';
 
 class Row extends Component {
     constructor() {
@@ -8,14 +8,14 @@ class Row extends Component {
     }
     componentDidMount() {
 
-        if (this.props.task.status == false) {
+        if (this.props.task.status === false) {
             this.refs.content.style.textDecoration = "line-through";
         } else {
             this.refs.content.style.textDecoration = "none";
         }
     }
     componentWillUpdate() {
-        if (this.props.task.status == false) {
+        if (this.props.task.status === false) {
             this.refs.content.style.textDecoration = "line-through";
         } else {
             this.refs.content.style.textDecoration = "none";
@@ -35,15 +35,15 @@ class Row extends Component {
         this.refs.content.style.display = "none";
     }
     editedText(e) {
-        if (e.key == 'Enter') {
+        if (e.key === 'Enter' || e.type === "blur") {
             this.props.editedContent(this.props.componentKey, this.refs.editInput.value);
             this.refs.content.innerText = this.refs.editInput.value;
             this.refs.editInput.style.display = "none";
-            this.refs.content.style.display = "inline";
+            this.refs.content.style.display = "block";
+            this.refs.editInput.focus();
         }
     }
     render() {
-        var status = this.props.task.status ? "active" : "done";
         var cssStatus = this.props.task.status ? "statusActive" : "statusDone";
         var rowClass = this.props.task.visible ? "row" : "hidden";
 
@@ -51,13 +51,14 @@ class Row extends Component {
             <tr className={rowClass}>
                 <td className={cssStatus} onClick={this.changeStatus.bind(this)}></td>
                 <td className="content">
-                    <label ref="content" onClick={this.editTask.bind(this)}>
+                    <span ref="content" onClick={this.editTask.bind(this)}>
                         {this.props.task.content}
-                    </label>
+                    </span>
                     <input className="editInput"
                         type="text"
                         ref="editInput"
-                        onKeyPress={this.editedText.bind(this)} />
+                        onKeyPress={this.editedText.bind(this)} 
+                        onBlur={this.editedText.bind(this)} />
                 </td>
                 <td className="closeBtn" onClick={this.delete.bind(this)}></td>
             </tr>
