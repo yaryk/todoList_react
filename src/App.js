@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Row from './Row';
+import ControlRow from "./ControlRow";
 import './App.css';
 
 class App extends Component {
@@ -35,12 +36,19 @@ class App extends Component {
     this.refs.form.reset();
   }
 
+  editedContent(key, content) {
+    this.state.tasks[key].content = content;
+    this.setState({
+      tasks: this.state.tasks
+    });
+  }
 
   renderRow(key, index, arr) {
     return <Row key={key} componentKey={key}
       task={this.state.tasks[key]}
       deleteRow={this.deleteRow.bind(this)}
-      changeStatus={this.changeStatus.bind(this)} />;
+      changeStatus={this.changeStatus.bind(this)} 
+      editedContent={this.editedContent.bind(this)} />;
   }
   deleteRow(key) {
     delete this.state.tasks[key];
@@ -100,11 +108,11 @@ class App extends Component {
         <table className="table">
           <tbody>
             {Object.keys(this.state.tasks).map(this.renderRow.bind(this))}
-            <tr className="controlRow">
-              <td onClick={this.showActive.bind(this)}>active</td>
-              <td onClick={this.showAll.bind(this)}>all</td>
-              <td onClick={this.clearDone.bind(this)}>clear Done</td>
-            </tr>
+            <ControlRow
+              showActive={this.showActive.bind(this)}
+              showAll={this.showAll.bind(this)}
+              clearDone={this.clearDone.bind(this)} 
+               />
           </tbody>
         </table>
       </div>
