@@ -2,15 +2,14 @@
     height: 50px;
 }
 .statusActive {
-    background: green;
+    background: url(../imgs/active.png) 50% 50% no-repeat;
 }
 .statusDone {
-    background: red;
+    background: url(../imgs/done.png) 50% 50% no-repeat;
 }
 .closeBtn {
-    background: url("../imgs/closeBtn.png");
-    background-repeat: no-repeat;
-    background-position: 50% 100%;
+    background: url("../imgs/closeBtn.png") 50% 100% no-repeat;
+    background-size: 5% 20%;
 }
 .closeBtn:hover {
     transform: scale(1.1);

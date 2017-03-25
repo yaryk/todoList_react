@@ -5,16 +5,21 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    if (window.localStorage.getItem("tasks")) {
+    if (localStorage.getItem("tasks")) {
       this.state = {
-      "tasks": JSON.parse(window.localStorage.getItem("tasks"))
-      }
+        "tasks": JSON.parse(localStorage.getItem("tasks"))
+      };
     } else {
       this.state = {
         "tasks": {}
       }
     }
   }
+
+  componentWillUpdate(nextProp, nextState) {
+    localStorage.setItem("tasks", JSON.stringify(nextState.tasks));
+  }
+
   addTask(e) {
     e.preventDefault();
     var timestamp = (new Date()).getTime();
@@ -27,7 +32,6 @@ class App extends Component {
     this.setState({
       tasks: this.state.tasks
     });
-    window.localStorage.setItem("tasks", JSON.stringify(this.state.tasks));
     this.refs.form.reset();
   }
 
@@ -40,7 +44,6 @@ class App extends Component {
   }
   deleteRow(key) {
     delete this.state.tasks[key];
-    window.localStorage.setItem("tasks", JSON.stringify(this.state.tasks));
     this.setState({
       tasks: this.state.tasks
     });
@@ -48,7 +51,6 @@ class App extends Component {
   }
   changeStatus(key) {
     this.state.tasks[key].status = !this.state.tasks[key].status;
-    window.localStorage.setItem("tasks", JSON.stringify(this.state.tasks));
     this.setState({
       tasks: this.state.tasks
     });
@@ -98,7 +100,7 @@ class App extends Component {
         <table className="table">
           <tbody>
             {Object.keys(this.state.tasks).map(this.renderRow.bind(this))}
-            <tr>
+            <tr className="controlRow">
               <td onClick={this.showActive.bind(this)}>active</td>
               <td onClick={this.showAll.bind(this)}>all</td>
               <td onClick={this.clearDone.bind(this)}>clear Done</td>
