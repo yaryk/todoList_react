@@ -1,0 +1,20 @@
+.row {
+    height: 50px;
+}
+.statusActive {
+    background: green;
+}
+.statusDone {
+    background: red;
+}
+.closeBtn {
+    background: url("../imgs/closeBtn.png");
+    background-repeat: no-repeat;
+    background-position: 50% 100%;
+}
+.closeBtn:hover {
+    transform: scale(1.1);
+}
+.hidden {
+    display: none;
+}
