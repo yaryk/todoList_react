@@ -1,0 +1,1 @@
+підключити autobind-decorator

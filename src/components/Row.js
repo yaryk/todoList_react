@@ -6,27 +6,28 @@ class Row extends Component {
         super();
         this.arr = [];
     }
-    componentDidMount() {
 
+    componentDidMount() {
         if (this.props.task.status === false) {
             this.refs.content.style.textDecoration = "line-through";
         } else {
             this.refs.content.style.textDecoration = "none";
         }
     }
-    componentWillUpdate() {
+
+    componentDidUpdate() {
         if (this.props.task.status === false) {
             this.refs.content.style.textDecoration = "line-through";
         } else {
             this.refs.content.style.textDecoration = "none";
         }
     }
+
     delete() {
         this.props.deleteRow(this.props.componentKey);
     }
     changeStatus() {
         this.props.changeStatus(this.props.componentKey);
-
     }
 
     editTask() {
@@ -57,7 +58,7 @@ class Row extends Component {
                     <input className="editInput"
                         type="text"
                         ref="editInput"
-                        onKeyPress={this.editedText.bind(this)} 
+                        onKeyPress={this.editedText.bind(this)}
                         onBlur={this.editedText.bind(this)} />
                 </td>
                 <td className="closeBtn" onClick={this.delete.bind(this)}></td>

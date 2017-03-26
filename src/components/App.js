@@ -3,22 +3,27 @@ import Row from './Row';
 import ControlRow from "./ControlRow";
 import '../styles/App.css';
 
+// re-base for sync state with firebase 
+import ReBase from "re-base"; // read more about re-base !!!
+var base = ReBase.createClass({
+  apiKey: "AIzaSyB1HEbrE-0M06_rlxvnVO6Hff6Sp9EYuUg",
+  authDomain: "todo-81e7e.firebaseapp.com",
+  databaseURL: "https://todo-81e7e.firebaseio.com"
+});
+
 class App extends Component {
-  constructor(props) {
-    super(props);
-    if (localStorage.getItem("tasks")) {
-      this.state = {
-        "tasks": JSON.parse(localStorage.getItem("tasks"))
-      };
-    } else {
+  constructor() {
+    super()
       this.state = {
         "tasks": {}
       }
-    }
   }
-
-  componentWillUpdate(nextProp, nextState) {
-    localStorage.setItem("tasks", JSON.stringify(nextState.tasks));
+ 
+  componentDidMount() {
+    base.syncState("tasks", {
+      context: this,
+      state: "tasks"
+    });
   }
 
   addTask(e) {
@@ -29,11 +34,35 @@ class App extends Component {
       content: this.refs.task.value,
       visible: true
     };
-    this.state.tasks["task-" + timestamp] = curTask;
+    this.state.tasks[`task-${timestamp}`] = curTask;
     this.setState({
       tasks: this.state.tasks
     });
     this.refs.form.reset();
+  }
+
+
+  renderRow(key, index, arr) {
+    return <Row key={key} componentKey={key}
+      task={this.state.tasks[key]}
+      deleteRow={this.deleteRow.bind(this)}
+      changeStatus={this.changeStatus.bind(this)}
+      editedContent={this.editedContent.bind(this)} />;
+  }
+
+  deleteRow(key) {
+    base.remove('tasks');
+    delete this.state.tasks[key];
+    this.setState({
+      tasks: this.state.tasks
+    });
+  }
+
+  changeStatus(key) {
+    this.state.tasks[key].status = !this.state.tasks[key].status;
+    this.setState({
+      tasks: this.state.tasks
+    });
   }
 
   editedContent(key, content) {
@@ -43,57 +72,35 @@ class App extends Component {
     });
   }
 
-  renderRow(key, index, arr) {
-    return <Row key={key} componentKey={key}
-      task={this.state.tasks[key]}
-      deleteRow={this.deleteRow.bind(this)}
-      changeStatus={this.changeStatus.bind(this)} 
-      editedContent={this.editedContent.bind(this)} />;
-  }
-  deleteRow(key) {
-    delete this.state.tasks[key];
-    this.setState({
-      tasks: this.state.tasks
-    });
-
-  }
-  changeStatus(key) {
-    this.state.tasks[key].status = !this.state.tasks[key].status;
-    this.setState({
-      tasks: this.state.tasks
-    });
-  }
   showActive() {
-    var self = this;
-    Object.keys(this.state.tasks).forEach(function (item) {
-      if (self.state.tasks[item].status) {
+    Object.keys(this.state.tasks).forEach((item) => {
+      if (this.state.tasks[item].status) {
         return;
       } else {
-        self.state.tasks[item].visible = false;
-        self.setState({
-          tasks: self.state.tasks
+        this.state.tasks[item].visible = false;
+        this.setState({
+          tasks: this.state.tasks
         });
       }
     });
   }
+
   showAll() {
-    var self = this;
-    Object.keys(this.state.tasks).forEach(function (item) {
-      self.state.tasks[item].visible = true;
-      self.setState({
-        tasks: self.state.tasks
+    Object.keys(this.state.tasks).forEach((item) => {
+      this.state.tasks[item].visible = true;
+      this.setState({
+        tasks: this.state.tasks
       });
     });
   }
 
   clearDone() {
-    var self = this;
-    Object.keys(this.state.tasks).forEach(function (item) {
-      if (self.state.tasks[item].status === false) {
-        delete self.state.tasks[item];
-        window.localStorage.setItem("tasks", JSON.stringify(self.state.tasks));
-        self.setState({
-          tasks: self.state.tasks
+    Object.keys(this.state.tasks).forEach((item) => {
+      if (this.state.tasks[item].status === false) {
+        base.remove("tasks");
+        delete this.state.tasks[item];
+        this.setState({
+          tasks: this.state.tasks
         });
       }
     });
@@ -103,7 +110,7 @@ class App extends Component {
     return (
       <div>
         <form ref="form" onSubmit={this.addTask.bind(this)}>
-          <input type="text" ref="task" placeholder="Type your task" className="taskInput"/>
+          <input type="text" ref="task" placeholder="Type your task" className="taskInput" />
         </form>
         <table className="table">
           <tbody>
@@ -111,8 +118,8 @@ class App extends Component {
             <ControlRow
               showActive={this.showActive.bind(this)}
               showAll={this.showAll.bind(this)}
-              clearDone={this.clearDone.bind(this)} 
-               />
+              clearDone={this.clearDone.bind(this)}
+            />
           </tbody>
         </table>
       </div>
