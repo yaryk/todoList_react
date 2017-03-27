@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
 import '../styles/Row.css';
 
 class Row extends Component {
@@ -33,6 +34,7 @@ class Row extends Component {
     editTask() {
         this.refs.editInput.value = this.refs.content.innerText;
         this.refs.editInput.style.display = "inline";
+        this.refs.editInput.autofocus = true;
         this.refs.content.style.display = "none";
     }
     editedText(e) {
@@ -40,6 +42,7 @@ class Row extends Component {
             this.props.editedContent(this.props.componentKey, this.refs.editInput.value);
             this.refs.content.innerText = this.refs.editInput.value;
             this.refs.editInput.style.display = "none";
+            this.refs.editInput.autofocus= false;
             this.refs.content.style.display = "block";
             this.refs.editInput.focus();
         }

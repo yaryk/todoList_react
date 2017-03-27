@@ -4,9 +4,15 @@ class ControlRow extends Component {
     render() {
         return (
             <tr className="controlRow">
-                <td onClick={this.props.showActive}>active</td>
-                <td onClick={this.props.showAll}>all</td>
-                <td onClick={this.props.clearDone}>clear Done</td>
+                <td>
+                    <button type="button" onClick={this.props.showActive} >Show Active</button>
+                </td>
+                <td >
+                    <button type="button" onClick={this.props.showAll} >Show all</button>
+                </td>
+                <td >
+                    <button type="button" onClick={this.props.clearDone} >Clear Done</button>
+                </td>
             </tr>
         )
     }

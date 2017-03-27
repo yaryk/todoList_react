@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
 import Row from './Row';
 import ControlRow from "./ControlRow";
 import '../styles/App.css';
@@ -113,14 +114,17 @@ class App extends Component {
           <input type="text" ref="task" placeholder="Type your task" className="taskInput" />
         </form>
         <table className="table">
-          <tbody>
+          <CSSTransitionGroup component="tbody"
+          transitionName="row"
+          transitionEnterTimeout={1000}
+          transitionLeaveTimeout={500}
+          >
             {Object.keys(this.state.tasks).map(this.renderRow.bind(this))}
             <ControlRow
               showActive={this.showActive.bind(this)}
               showAll={this.showAll.bind(this)}
-              clearDone={this.clearDone.bind(this)}
-            />
-          </tbody>
+              clearDone={this.clearDone.bind(this)} />
+          </CSSTransitionGroup>
         </table>
       </div>
     );
