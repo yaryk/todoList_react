@@ -1,0 +1,8 @@
+.controlRow button {
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+.controlRow button:hover {
+    background: #ccc;
+}

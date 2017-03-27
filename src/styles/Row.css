@@ -28,7 +28,7 @@
 }
 
 .statusActive {
-    width: 20px;
+    width: 30px;
     background: url(../../imgs/active.png) 50% 50% no-repeat;
 }
 .content span {

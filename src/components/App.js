@@ -120,12 +120,12 @@ class App extends Component {
           transitionLeaveTimeout={500}
           >
             {Object.keys(this.state.tasks).map(this.renderRow.bind(this))}
+          </CSSTransitionGroup>
+        </table>
             <ControlRow
               showActive={this.showActive.bind(this)}
               showAll={this.showAll.bind(this)}
               clearDone={this.clearDone.bind(this)} />
-          </CSSTransitionGroup>
-        </table>
       </div>
     );
   }

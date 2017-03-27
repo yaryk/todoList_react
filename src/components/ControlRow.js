@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
+import "../styles/ControlRow.css";
 
 class ControlRow extends Component {
     render() {
         return (
-            <tr className="controlRow">
-                <td>
-                    <button type="button" onClick={this.props.showActive} >Show Active</button>
-                </td>
-                <td >
-                    <button type="button" onClick={this.props.showAll} >Show all</button>
-                </td>
-                <td >
-                    <button type="button" onClick={this.props.clearDone} >Clear Done</button>
-                </td>
-            </tr>
+            <div className="controlRow">
+                <button type="button" onClick={this.props.showActive} >Show Active</button>
+                <button type="button" onClick={this.props.showAll} >Show all</button>
+                <button type="button" onClick={this.props.clearDone} >Clear Done</button>
+            </div>
         )
     }
 }
