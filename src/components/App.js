@@ -22,13 +22,13 @@ class App extends Component {
     }
   }
 
-  auth(provider) {
-    Firebase.auth().signInWithPopup("github").then(function (result) {
-      // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+  // auth(provider) {
+  //   Firebase.auth().signInWithPopup("github").then(function (result) {
+  //     // This gives you a GitHub Access Token. You can use it to access the GitHub API.
       
-      console.log(result);
-    });
-  }
+  //     console.log(result);
+  //   });
+  // }
 
   componentDidMount() {
     base.syncState("tasks", {
