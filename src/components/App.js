@@ -11,15 +11,25 @@ var base = ReBase.createClass({
   authDomain: "todo-81e7e.firebaseapp.com",
   databaseURL: "https://todo-81e7e.firebaseio.com"
 });
+import Firebase from "firebase";
+const ref = new Firebase.auth.GithubAuthProvider();;
 
 class App extends Component {
   constructor() {
     super()
-      this.state = {
-        "tasks": {}
-      }
+    this.state = {
+      "tasks": {}
+    }
   }
- 
+
+  auth(provider) {
+    Firebase.auth().signInWithPopup("github").then(function (result) {
+      // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+      
+      console.log(result);
+    });
+  }
+
   componentDidMount() {
     base.syncState("tasks", {
       context: this,
@@ -115,17 +125,20 @@ class App extends Component {
         </form>
         <table className="table">
           <CSSTransitionGroup component="tbody"
-          transitionName="row"
-          transitionEnterTimeout={1000}
-          transitionLeaveTimeout={500}
+            transitionName="row"
+            transitionEnterTimeout={1000}
+            transitionLeaveTimeout={500}
           >
             {Object.keys(this.state.tasks).map(this.renderRow.bind(this))}
           </CSSTransitionGroup>
         </table>
-            <ControlRow
-              showActive={this.showActive.bind(this)}
-              showAll={this.showAll.bind(this)}
-              clearDone={this.clearDone.bind(this)} />
+        <ControlRow
+          showActive={this.showActive.bind(this)}
+          showAll={this.showAll.bind(this)}
+          clearDone={this.clearDone.bind(this)} />
+        <div>Login
+                <button onClick={this.auth.bind(this, "github")}>Github</button>
+        </div>
       </div>
     );
   }
